@@ -23,6 +23,7 @@
   "dependencies": {
     "browserify": "^16.1.1",
     "bubleify": "^1.1.0",
+    "exorcist": "^1.0.1",
     "promisepipe": "^2.1.2",
     "uglifyify": "^4.0.5"
   }
