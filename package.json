@@ -1,0 +1,29 @@
+{
+  "name": "postinstall-js",
+  "version": "1.0.0",
+  "description": "postinstall command to browserify with buble and uglifyjs2",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kapouer/postinstall-js.git"
+  },
+  "keywords": [
+    "postinstall",
+    "browserify"
+  ],
+  "author": "Jérémy Lal <kapouer@melix.org>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kapouer/postinstall-js/issues"
+  },
+  "homepage": "https://github.com/kapouer/postinstall-js#readme",
+  "dependencies": {
+    "browserify": "^16.1.1",
+    "bubleify": "^1.1.0",
+    "promisepipe": "^2.1.2",
+    "uglifyify": "^4.0.5"
+  }
+}
