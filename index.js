@@ -3,11 +3,10 @@ const exorcist = require('exorcist');
 const promisePipe = require('promisepipe');
 const fs = require('fs');
 
-module.exports = function(input, output, options) {
-	var tr = browserify({
-		debug: true
-	})
-	.add(input)
+module.exports = function(inputs, output, options) {
+	var opts = Object.assign({}, options, {debug: true});
+	var tr = browserify(opts)
+	.add(inputs)
 	.transform('bubleify', {})
 	.transform('uglifyify', {})
 	.bundle()
