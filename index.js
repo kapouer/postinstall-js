@@ -7,8 +7,8 @@ module.exports = function(inputs, output, options) {
 	var opts = Object.assign({}, options, {debug: true});
 	var tr = browserify(opts)
 	.add(inputs)
-	.transform('bubleify', {})
-	.transform('uglifyify', {})
+	.transform(require('bubleify'), {})
+	.transform(require('uglifyify'), {})
 	.bundle()
 	.pipe(exorcist(`${output}.map`))
 	.pipe(fs.createWriteStream(output));
