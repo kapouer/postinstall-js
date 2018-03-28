@@ -1,18 +1,62 @@
-const browserify = require('browserify');
-const exorcist = require('exorcist');
-const promisePipe = require('promisepipe');
+const UglifyJS = require("uglify-js");
+const babel = require("babel-core");
+const presetEnv = require.resolve('babel-preset-env');
+const pluginBuiltinClasses = require.resolve("babel-plugin-transform-builtin-classes");
+
+const pify = require('util').promisify;
 const fs = require('fs');
+const readFile = pify(fs.readFile);
+const writeFile = pify(fs.writeFile);
 
 module.exports = function(inputs, output, options) {
-	var opts = Object.assign({}, options, {debug: true});
-	var tr = browserify(opts)
-	.add(inputs)
-	.transform(require('bubleify'), {})
-	.transform(require('uglifyify'), {})
-	.bundle()
-	.pipe(exorcist(`${output}.map`))
-	.pipe(fs.createWriteStream(output));
+	var opts = Object.assign({}, options);
 
-	return promisePipe(tr);
+	var babelOpts = {
+		presets: [
+			[presetEnv, {modules: options.modules}]
+		],
+		plugins: [],
+		sourceMaps: false
+	};
+
+	if (options.builtinClasses) {
+		var builtinOpts = options.builtinClasses;
+		if (builtinOpts === true) builtinOpts = ["Error", "Array", "HTMLElement"];
+		babelOpts.plugins.push([pluginBuiltinClasses, {
+			"globals": builtinOpts
+		}]);
+	}
+
+	return Promise.all(inputs.map(function(input) {
+		return readFile(input);
+	})).then(function(bufs) {
+		var map = {};
+		bufs.forEach(function(buf, i) {
+			var input = inputs[i];
+			var code = buf.toString().replace(/# sourceMappingURL\=.+$/gm, "");
+			map[input] = babel.transform(code, babelOpts).code;
+		});
+		var code;
+		if (opts.minify === false) {
+			code = Object.values(map).join('\n');
+		} else {
+			var result = UglifyJS.minify(map, {
+				compress: true,
+				mangle: true,
+				output: {
+					ast: false,
+					code: true
+				}
+			});
+			if (result.error) return Promise.reject(result.error);
+			code = result.code;
+		}
+		return writeFile(output, code);
+	});
 };
 
+/* NOTE for self
+to update to babel 7 (but extending builtin classes is broken is beta 42)
+babel-xxx -> @babel/xxx
+and babel-plugin-transform-builtin-classes -> @babel/plugin-transform-classes
+*/

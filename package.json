@@ -1,6 +1,6 @@
 {
   "name": "postinstall-js",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "postinstall command to browserify with buble and uglifyjs2",
   "main": "index.js",
   "scripts": {
@@ -21,11 +21,9 @@
   },
   "homepage": "https://github.com/kapouer/postinstall-js#readme",
   "dependencies": {
-    "browserify": "^16.1.1",
-    "bubleify": "^1.1.0",
-    "exorcist": "^1.0.1",
-    "promisepipe": "^2.1.2",
-    "uglifyify": "^4.0.5"
+    "babel-core": "^6.26.0",
+    "babel-plugin-transform-builtin-classes": "^0.6.1",
+    "babel-preset-env": "^1.6.1"
   },
   "peerDependencies": {
     "postinstall": "^0.1.0"
