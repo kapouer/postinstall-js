@@ -23,7 +23,8 @@
   "dependencies": {
     "babel-core": "^6.26.0",
     "babel-plugin-transform-builtin-classes": "^0.6.1",
-    "babel-preset-env": "^1.6.1"
+    "babel-preset-env": "^1.6.1",
+    "uglify-js": "^3.3.16"
   },
   "peerDependencies": {
     "postinstall": "^0.1.0"
