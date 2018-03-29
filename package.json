@@ -1,6 +1,6 @@
 {
   "name": "postinstall-js",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "postinstall command to browserify with buble and uglifyjs2",
   "main": "index.js",
   "scripts": {
