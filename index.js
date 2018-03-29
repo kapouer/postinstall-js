@@ -9,6 +9,7 @@ const readFile = pify(fs.readFile);
 const writeFile = pify(fs.writeFile);
 
 module.exports = function(inputs, output, options) {
+	if (inputs.length == 0) return writeFile(output, "");
 	var opts = Object.assign({}, options);
 
 	var babelOpts = {
