@@ -10,7 +10,9 @@ const writeFile = pify(fs.writeFile);
 
 module.exports = function(inputs, output, options) {
 	if (inputs.length == 0) return Promise.resolve();
-	var opts = Object.assign({}, options);
+	var opts = Object.assign({
+		modules: false
+	}, options);
 
 	var babelOpts = {
 		presets: [
@@ -20,12 +22,12 @@ module.exports = function(inputs, output, options) {
 		sourceMaps: false
 	};
 
-	if (options.builtinClasses) {
+	if (options.builtinClasses !== false) {
 		var builtinOpts = options.builtinClasses;
-		if (builtinOpts === true) builtinOpts = ["Error", "Array", "HTMLElement"];
-		babelOpts.plugins.push([pluginBuiltinClasses, {
-			"globals": builtinOpts
-		}]);
+		if (builtinOpts === true) builtinOpts = {
+			globals: ["Error", "Array", "HTMLElement"]
+		};
+		babelOpts.plugins.push([pluginBuiltinClasses, builtinOpts]);
 	}
 
 	return Promise.all(inputs.map(function(input) {
