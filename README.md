@@ -20,6 +20,12 @@ require('postinstall-js')(inputs, output, options).then(function() {
 Options
 =======
 
+browsers
+--------
+
+Pass `browsers: ['Last 2 versions']` to override the default setting of
+last 10 versions.
+
 minify
 ------
 

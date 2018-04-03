@@ -16,7 +16,12 @@ module.exports = function(inputs, output, options) {
 
 	var babelOpts = {
 		presets: [
-			[presetEnv, {modules: options.modules}]
+			[presetEnv, {
+				modules: opts.modules,
+				targets: {
+					browsers: opts.browsers || [ "last 10 versions" ]
+				}
+			}]
 		],
 		plugins: [],
 		sourceMaps: false
