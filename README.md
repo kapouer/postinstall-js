@@ -35,8 +35,7 @@ Pass `minify: false` to disable minification.
 modules
 -------
 
-When processing files that are already commonjs modules, pass `modules: false`.
-To process files that are already commonjs modules, pass postinstall option:
+By default `modules: false` is passed to babel-preset-env.
 
 
 extending native elements
