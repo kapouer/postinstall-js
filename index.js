@@ -19,7 +19,7 @@ module.exports = function(inputs, output, options) {
 			[presetEnv, {
 				modules: opts.modules,
 				targets: {
-					browsers: opts.browsers || [ "last 10 versions" ]
+					browsers: opts.browsers || [ ">=0.15%, not ie 8" ]
 				}
 			}]
 		],
