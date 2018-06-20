@@ -23,8 +23,10 @@ Options
 browsers
 --------
 
-Pass `browsers: ['Last 2 versions']` to override the default setting of
-last 10 versions.
+The default setting:
+```
+browsers: ["> 0.2%", "last 1 version", "not dead"]
+```
 
 minify
 ------
