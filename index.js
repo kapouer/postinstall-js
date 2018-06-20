@@ -42,7 +42,7 @@ module.exports = function(inputs, output, options) {
 		bufs.forEach(function(buf, i) {
 			var input = inputs[i];
 			var code = buf.toString().replace(/# sourceMappingURL\=.+$/gm, "");
-			map[input] = babel.transform(code, babelOpts).code;
+			map[input] = '(function() {\n' + babel.transform(code, babelOpts).code + '\n})();\n';
 		});
 		var code;
 		if (opts.minify === false) {
