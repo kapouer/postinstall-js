@@ -12,7 +12,9 @@
   },
   "keywords": [
     "postinstall",
-    "browserify"
+    "babel",
+    "minify",
+    "transpile"
   ],
   "author": "Jérémy Lal <kapouer@melix.org>",
   "license": "MIT",
