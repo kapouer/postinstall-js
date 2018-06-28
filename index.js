@@ -24,7 +24,8 @@ module.exports = function(inputs, output, options) {
 			}]
 		],
 		plugins: [],
-		sourceMaps: false
+		sourceMaps: false,
+		compact: false
 	};
 
 	if (options.builtinClasses !== false) {
