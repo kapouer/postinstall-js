@@ -1,12 +1,22 @@
-const UglifyJS = require("uglify-js");
-const babel = require("babel-core");
-const presetEnv = require.resolve('babel-preset-env');
-const pluginBuiltinClasses = require.resolve("babel-plugin-transform-builtin-classes");
+const presetEnv = require.resolve('@babel/preset-env');
+const presetMinify = require.resolve('babel-preset-minify');
 
 const pify = require('util').promisify;
 const fs = require('fs');
 const readFile = pify(fs.readFile);
 const writeFile = pify(fs.writeFile);
+const Path = require('path');
+const crypto = require('crypto');
+
+const WorkerNodes = require('worker-nodes');
+
+const worker = new WorkerNodes(Path.join(__dirname, 'worker.js'), {
+	taskTimeout: 60 * 1000
+});
+
+process.on('exit', function() {
+	worker.terminate();
+});
 
 module.exports = function(inputs, output, options) {
 	if (inputs.length == 0) return Promise.resolve();
@@ -28,44 +38,36 @@ module.exports = function(inputs, output, options) {
 		compact: false
 	};
 
-	if (options.builtinClasses !== false) {
-		var builtinOpts = options.builtinClasses;
-		if (builtinOpts === true) builtinOpts = {
-			globals: ["Error", "Array", "HTMLElement"]
-		};
-		babelOpts.plugins.push([pluginBuiltinClasses, builtinOpts]);
+	if (opts.minify !== false) {
+		babelOpts.presets.push([presetMinify]);
+		babelOpts.comments = false;
 	}
 
 	return Promise.all(inputs.map(function(input) {
-		return readFile(input);
-	})).then(function(bufs) {
-		var map = {};
-		bufs.forEach(function(buf, i) {
-			var input = inputs[i];
-			var code = buf.toString().replace(/# sourceMappingURL\=.+$/gm, "");
-			map[input] = '(function() {\n' + babel.transform(code, babelOpts).code + '\n})();\n';
-		});
-		var code;
-		if (opts.minify === false) {
-			code = Object.values(map).join('\n');
-		} else {
-			var result = UglifyJS.minify(map, {
-				compress: true,
-				mangle: true,
-				output: {
-					ast: false,
-					code: true
-				}
+		return readTransformed(input, opts.cacheDir, function(input) {
+			return readFile(input).then(function(buf) {
+				return worker.call(buf, babelOpts);
 			});
-			if (result.error) return Promise.reject(result.error);
-			code = result.code;
-		}
-		return writeFile(output, code);
+		});
+	})).then(function(strs) {
+		return writeFile(output, strs.join('\n'));
 	});
 };
 
-/* NOTE for self
-to update to babel 7 (but extending builtin classes is broken is beta 42)
-babel-xxx -> @babel/xxx
-and babel-plugin-transform-builtin-classes -> @babel/plugin-transform-classes
-*/
+
+function readTransformed(filePath, cacheDir, operation) {
+	if (!cacheDir) return operation(filePath);
+	var hash = crypto.createHash('sha256').update(filePath).digest('hex');
+	var ext = Path.extname(filePath) || '.bin';
+	var cachePath = Path.join(cacheDir, hash + ext);
+	return readFile(cachePath).then(function(buf) {
+		return buf.toString();
+	}).catch(function(err) {
+		// no cached file
+		return operation(filePath).then(function(buf) {
+			return writeFile(cachePath, buf).then(function() {
+				return buf;
+			});
+		});
+	});
+}

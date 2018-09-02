@@ -40,16 +40,16 @@ modules
 By default `modules: false` is passed to babel-preset-env.
 
 
+cacheDir
+--------
+
+A path to a cache directory must be set to enable cache.
+
+
 extending native elements
 -------------------------
 
-To disable support for class-extending native HTMLElement, Array, Error, pass
-`builtinClasses: false`.
-
-`builtinClasses` can also be options given to the plugin
-`babel-plugin-transform-builtin-classes`.
-
-Note that babel 6 and babel-plugin-transform-builtin-classes only support this
+Note that babel 7 and @babel/plugin-transform-classes only support this
 type of constructor overriding:
 
 ```
