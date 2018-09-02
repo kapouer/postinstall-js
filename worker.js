@@ -26,7 +26,6 @@ function readTransformed(filePath, opts, babelOpts) {
 				});
 			});
 		} else {
-			console.log("hit", filePath);
 			return fs.readFile(cachePath).then(function(buf) {
 				return buf.toString();
 			});
