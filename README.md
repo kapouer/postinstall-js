@@ -3,7 +3,12 @@ postinstall-js
 
 This is a [postinstall](http://github.com/kapouer/postintall) command plugin.
 
-It runs `babel-preset-env` and `uglify-js` on inputs, resulting in a bundled output.
+It runs `babel-preset-env` and `babel-preset-minify` on inputs, and concatenate
+them on output.
+
+To transform inputs using browserify, please check
+[postinstall-browserify](http://github.com/kapouer/postintall-browserify).
+
 
 Usage
 -----
@@ -32,6 +37,12 @@ minify
 ------
 
 Pass `minify: false` to disable minification.
+
+
+comments
+--------
+
+By default, when `minify` is active, babel `comments` option is set to false.
 
 
 modules
@@ -67,5 +78,5 @@ class HTMLMyCustomElement extends HTMLElement {
 Caveats
 -------
 
-Support for source maps is not yet available.
+Support for source maps is not available and will be added eventually.
 

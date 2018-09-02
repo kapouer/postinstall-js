@@ -2,11 +2,12 @@ const presetEnv = require.resolve('@babel/preset-env');
 const presetMinify = require.resolve('babel-preset-minify');
 
 const pify = require('util').promisify;
-const fs = require('fs');
-const readFile = pify(fs.readFile);
-const writeFile = pify(fs.writeFile);
+const fs = {
+	readFile: pify(require('fs').readFile),
+	writeFile: pify(require('fs').writeFile),
+	stat: pify(require('fs').stat)
+};
 const Path = require('path');
-const crypto = require('crypto');
 
 const WorkerNodes = require('worker-nodes');
 
@@ -42,32 +43,12 @@ module.exports = function(inputs, output, options) {
 		babelOpts.presets.push([presetMinify]);
 		babelOpts.comments = false;
 	}
+	if (opts.comments !== undefined) babelOpts.comments = opts.comments;
 
 	return Promise.all(inputs.map(function(input) {
-		return readTransformed(input, opts.cacheDir, function(input) {
-			return readFile(input).then(function(buf) {
-				return worker.call(buf, babelOpts);
-			});
-		});
+		return worker.call(input, opts, babelOpts);
 	})).then(function(strs) {
-		return writeFile(output, strs.join('\n'));
+		return fs.writeFile(output, strs.join('\n'));
 	});
 };
 
-
-function readTransformed(filePath, cacheDir, operation) {
-	if (!cacheDir) return operation(filePath);
-	var hash = crypto.createHash('sha256').update(filePath).digest('hex');
-	var ext = Path.extname(filePath) || '.bin';
-	var cachePath = Path.join(cacheDir, hash + ext);
-	return readFile(cachePath).then(function(buf) {
-		return buf.toString();
-	}).catch(function(err) {
-		// no cached file
-		return operation(filePath).then(function(buf) {
-			return writeFile(cachePath, buf).then(function() {
-				return buf;
-			});
-		});
-	});
-}
