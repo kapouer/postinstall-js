@@ -1,13 +1,13 @@
 postinstall-js
 ==============
 
-This is a [postinstall](http://github.com/kapouer/postintall) command plugin.
+This is a [postinstall](http://github.com/kapouer/postinstall) command plugin.
 
 It runs `babel-preset-env` and `babel-preset-minify` on inputs, and concatenate
 them on output.
 
 To transform inputs using browserify, please check
-[postinstall-browserify](http://github.com/kapouer/postintall-browserify).
+[postinstall-browserify](http://github.com/kapouer/postinstall-browserify).
 
 
 Usage
