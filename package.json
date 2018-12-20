@@ -23,8 +23,8 @@
   },
   "homepage": "https://github.com/kapouer/postinstall-js#readme",
   "dependencies": {
-    "@babel/core": "^7.0.0",
-    "@babel/preset-env": "^7.0.0",
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.2.3",
     "babel-preset-minify": "^0.5.0",
     "worker-nodes": "^1.6.1"
   },
