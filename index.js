@@ -40,7 +40,9 @@ module.exports = function(inputs, output, options) {
 	};
 
 	if (opts.minify !== false) {
-		babelOpts.presets.push([presetMinify]);
+		babelOpts.presets.push([presetMinify, {
+			builtIns: false // https://github.com/babel/minify/issues/904
+		}]);
 		babelOpts.comments = false;
 	}
 	if (opts.comments !== undefined) babelOpts.comments = opts.comments;
