@@ -28,10 +28,13 @@ Options
 browsers
 --------
 
-The default setting:
-```
-browsers: ["> 0.2%", "last 1 version", "not dead"]
-```
+Breaking change in version 0.5.0:
+do not use `browsers` option.
+
+Rely on browserslist to get a default reasonable set,
+or use package.json or .browserslistrc file:
+https://github.com/browserslist/browserslist#readme
+
 
 minify
 ------

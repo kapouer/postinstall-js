@@ -28,10 +28,7 @@ module.exports = function(inputs, output, options) {
 	var babelOpts = {
 		presets: [
 			[presetEnv, {
-				modules: opts.modules,
-				targets: {
-					browsers: opts.browsers || ["> 0.2%", "last 1 version", "not dead"]
-				}
+				modules: opts.modules
 			}]
 		],
 		plugins: [],
