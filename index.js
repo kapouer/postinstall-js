@@ -1,53 +1,40 @@
+const Cache = require('postinstall-cache');
 const presetEnv = require.resolve('@babel/preset-env');
-const presetMinify = require.resolve('babel-preset-minify');
+// const runtimePlugin = require.resolve('@babel/plugin-transform-runtime');
+// const regeneratorRuntime = require.resolve('regenerator-runtime/runtime.js');
 
-const pify = require('util').promisify;
-const fs = {
-	readFile: pify(require('fs').readFile),
-	writeFile: pify(require('fs').writeFile),
-	stat: pify(require('fs').stat)
-};
-const Path = require('path');
-
-const WorkerNodes = require('worker-nodes');
-
-const worker = new WorkerNodes(Path.join(__dirname, 'worker.js'), {
-	taskTimeout: 60 * 1000
-});
-
-process.on('exit', function() {
-	worker.terminate();
+const cacheWorker = Cache.worker({
+	dirname: __dirname
 });
 
 module.exports = function(inputs, output, options) {
-	if (inputs.length == 0) return Promise.resolve();
 	var opts = Object.assign({
 		modules: false
 	}, options);
 
-	var babelOpts = {
+	opts.babel = {
 		presets: [
 			[presetEnv, {
-				modules: opts.modules
+				modules: opts.modules,
+				exclude: ["@babel/plugin-transform-typeof-symbol"]
 			}]
 		],
-		plugins: [],
+		// plugins: [
+			// [ runtimePlugin, {
+			// 	helpers: true,
+			// 	regenerator: false
+			// }]
+		// ],
 		sourceMaps: false,
 		compact: false
 	};
 
 	if (opts.minify !== false) {
-		babelOpts.presets.push([presetMinify, {
-			builtIns: false // https://github.com/babel/minify/issues/904
-		}]);
-		babelOpts.comments = false;
+		opts.babel.comments = false;
 	}
-	if (opts.comments !== undefined) babelOpts.comments = opts.comments;
+	if (opts.comments !== undefined) opts.babel.comments = opts.comments;
+	//if (!opts.modules) inputs = [regeneratorRuntime].concat(inputs);
 
-	return Promise.all(inputs.map(function(input) {
-		return worker.call(input, opts, babelOpts);
-	})).then(function(strs) {
-		return fs.writeFile(output, strs.join('\n'));
-	});
+	return cacheWorker(inputs, output, opts);
 };
 
