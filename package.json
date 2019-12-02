@@ -23,12 +23,8 @@
   },
   "homepage": "https://github.com/kapouer/postinstall-js#readme",
   "dependencies": {
-    "@babel/core": "^7.6.4",
-    "@babel/plugin-transform-runtime": "^7.6.2",
-    "@babel/preset-env": "^7.6.3",
+    "@swc/core": "^1.1.2",
     "postinstall": "^0.6.0",
-    "postinstall-cache": "^0.6.0",
-    "regenerator-runtime": "^0.13.3",
-    "uglify-js": "^3.6.4"
+    "postinstall-cache": "^0.6.0"
   }
 }
