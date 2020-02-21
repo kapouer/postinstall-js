@@ -8,7 +8,7 @@ module.exports = function(input, data, output, opts) {
 		data.replace(/# sourceMappingURL=.+$/gm, ""),
 		transpilerOpts
 	).then(function({code, map}) {
-		code = '(function() {\n' + code + '\n})();\n';
+		//code = '(function() {\n' + code + '\n})();\n';
 		return {
 			data: code
 		};
