@@ -10,8 +10,14 @@ module.exports = function(inputs, output, options) {
 		sourceMaps: false,
 		minify: opts.minify !== false,
 		jsc: {
+			loose: true,
+			parser: {
+				syntax: "ecmascript",
+				classProperty: true
+			},
 			transform: {
-				target: "es5"
+				target: "es5",
+				optimizer: true
 			}
 		}
 	};
