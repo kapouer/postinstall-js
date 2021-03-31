@@ -13,7 +13,8 @@ const cacheWorker = Cache.worker({
 
 module.exports = function(inputs, output, options) {
 	var opts = Object.assign({
-		modules: false
+		modules: false,
+		iife: true
 	}, options);
 
 	opts.babel = {

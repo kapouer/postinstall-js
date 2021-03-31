@@ -6,7 +6,9 @@ module.exports = function(input, data, output, opts) {
 		data.replace(/# sourceMappingURL=.+$/gm, ""),
 		Object.assign({}, opts.babel, {	filename: input })
 	).code;
-	code = '(function() {\n' + code + '\n})();\n';
+	if (opts.iife) {
+		code = '(function() {\n' + code + '\n})();\n';
+	}
 	var result = {};
 	if (opts.minify !== false) {
 		var ugl = Uglify.minify({
