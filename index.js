@@ -17,12 +17,14 @@ module.exports = function(inputs, output, options) {
 		iife: true
 	}, options);
 
+	var presetOpts = Object.assign({
+		modules: opts.modules,
+		exclude: ["@babel/plugin-transform-typeof-symbol"]
+	}, options.presetEnv);
+
 	opts.babel = {
 		presets: [
-			[presetEnv, {
-				modules: opts.modules,
-				exclude: ["@babel/plugin-transform-typeof-symbol"]
-			}]
+			[presetEnv, presetOpts]
 		],
 		plugins: [
 			plugins[0], plugins[1]
