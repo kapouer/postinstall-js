@@ -2,6 +2,7 @@ const Cache = require('postinstall-cache');
 const presetEnv = require.resolve('@babel/preset-env');
 const plugins = [
 	"@babel/plugin-proposal-class-properties",
+	"@babel/plugin-proposal-private-methods",
 	"@babel/plugin-proposal-optional-chaining"
 ].map((str) => require.resolve(str));
 // const runtimePlugin = require.resolve('@babel/plugin-transform-runtime');
