@@ -1,24 +1,17 @@
-const babel = require("@babel/core");
-const Uglify = require('uglify-js');
+const transpiler = require("@swc/core");
 
 module.exports = function(input, data, output, opts) {
-	var code = babel.transform(
+	var transpilerOpts = Object.assign({}, opts.transpiler, {
+		filename: input
+	});
+	return transpiler.transform(
 		data.replace(/# sourceMappingURL=.+$/gm, ""),
-		Object.assign({}, opts.babel, {	filename: input })
-	).code;
-	if (opts.iife) {
+		transpilerOpts
+	).then(function({code, map}) {
 		code = '(function() {\n' + code + '\n})();\n';
-	}
-	var result = {};
-	if (opts.minify !== false) {
-		var ugl = Uglify.minify({
-			[input]: code
-		});
-		if (ugl.error) throw(ugl.error);
-		result.data = ugl.code;
-	} else {
-		result.data = code;
-	}
-	return result;
+		return {
+			data: code
+		};
+	});
 };
 
