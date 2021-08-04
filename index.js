@@ -13,12 +13,12 @@ const cacheWorker = Cache.worker({
 });
 
 module.exports = function(inputs, output, options) {
-	var opts = Object.assign({
+	const opts = Object.assign({
 		modules: false,
 		iife: true
 	}, options);
 
-	var presetOpts = Object.assign({
+	const presetOpts = Object.assign({
 		modules: opts.modules,
 		exclude: ["@babel/plugin-transform-typeof-symbol"]
 	}, options.presetEnv);
