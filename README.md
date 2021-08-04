@@ -1,5 +1,4 @@
-postinstall-js
-==============
+# postinstall-js
 
 This is a [postinstall](http://github.com/kapouer/postinstall) command plugin.
 
@@ -9,77 +8,61 @@ them on output.
 To transform inputs using browserify, please check
 [postinstall-browserify](http://github.com/kapouer/postinstall-browserify).
 
-
-Usage
------
+## Usage
 
 The plugin can be called directly, or through `postinstall`.
 
 Directly:
-```
+
+```js
 require('postinstall-js')(inputs, output, options).then(function() {
-	// done
+ // done
 });
 ```
 
-Options
-=======
+## Options
 
-browsers
---------
+### browsers
 
 Breaking change in version 0.5.0:
 do not use `browsers` option.
 
 Rely on browserslist to get a default reasonable set,
-or use package.json or .browserslistrc file:
-https://github.com/browserslist/browserslist#readme
+or use package.json or .browserslistrc file.
+See [browserslist](https://github.com/browserslist/browserslist#readme).
 
-
-minify
-------
+### minify
 
 Pass `minify: false` to disable minification.
 
-
-comments
---------
+### comments
 
 By default, when `minify` is active, babel `comments` option is set to false.
 
-
-modules
--------
+### modules
 
 By default `modules: false` is passed to babel-preset-env.
 
-
-cacheDir
---------
+### cacheDir
 
 A path to a cache directory must be set to enable cache.
 
-
-extending native elements
--------------------------
+### extending native elements
 
 Note that babel 7 and @babel/plugin-transform-classes only support this
 type of constructor overriding:
 
-```
+```js
 class HTMLMyCustomElement extends HTMLElement {
-	constructor(me) {
-		me = super(me);
-		me.init();
-		return me;
-	}
-	init() {}
+ constructor(me) {
+  me = super(me);
+  me.init();
+  return me;
+ }
+ init() {}
 }
 ```
 
-
-Caveats
--------
+### Caveats
 
 Support for source maps is not available and will be added eventually.
-
