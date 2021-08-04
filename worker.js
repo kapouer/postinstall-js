@@ -1,7 +1,7 @@
 const transpiler = require("@swc/core");
 
 module.exports = function(input, data, output, opts) {
-	var transpilerOpts = Object.assign({}, opts.transpiler, {
+	const transpilerOpts = Object.assign({}, opts.transpiler, {
 		filename: input
 	});
 	return transpiler.transform(

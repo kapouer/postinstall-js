@@ -4,8 +4,8 @@ const cacheWorker = Cache.worker({
 	dirname: __dirname
 });
 
-module.exports = function(inputs, output, options) {
-	var opts = Object.assign({}, options);
+module.exports = function (inputs, output, options) {
+	const opts = Object.assign({}, options);
 	opts.transpiler = {
 		sourceMaps: false,
 		minify: opts.minify !== false,

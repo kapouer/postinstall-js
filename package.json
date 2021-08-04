@@ -27,5 +27,11 @@
     "esbuild-linux-64": "0.0.9",
     "postinstall": "^0.6.0",
     "postinstall-cache": "^0.6.0"
+  },
+  "devDependencies": {
+    "@kapouer/eslint-config": "^1.4.1"
+  },
+  "eslintConfig": {
+    "extends": "@kapouer/eslint-config"
   }
 }
