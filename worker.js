@@ -5,12 +5,11 @@ module.exports = function(input, data, output, opts) {
 		filename: input
 	});
 	return transpiler.transform(
-		data.replace(/# sourceMappingURL=.+$/gm, ""),
+		data,
 		transpilerOpts
-	).then(function({code, map}) {
-		code = '(function() {\n' + code + '\n})();\n';
+	).then(function ({ code }) {
 		return {
-			data: code
+			data: code + "\n"
 		};
 	});
 };
