@@ -23,8 +23,8 @@
   },
   "homepage": "https://github.com/kapouer/postinstall-js#readme",
   "dependencies": {
+    "@swc/core": "^1.2.79",
     "esbuild-linux-64": "0.0.9",
-    "@swc/core": "^1.2.71",
     "postinstall": "^0.7.0",
     "postinstall-cache": "^0.7.0"
   },

@@ -1,12 +1,8 @@
-const Cache = require('postinstall-cache');
-
-const cacheWorker = Cache.worker({
-	dirname: __dirname
-});
+const transpiler = require("@swc/core");
+const fs = require('fs').promises;
 
 module.exports = function (inputs, output, options) {
-	const opts = Object.assign({}, options);
-	opts.transpiler = {
+	const opts = {
 		sourceMaps: false,
 		jsc: {
 			loose: true,
@@ -18,12 +14,15 @@ module.exports = function (inputs, output, options) {
 		}
 	};
 	if (opts.minify !== false) {
-		opts.transpiler.minify = true;
-		opts.transpiler.jsc.minify = {
+		opts.minify = true;
+		opts.jsc.minify = {
 			compress: true,
 			mangle: true
 		};
 	}
-	return cacheWorker(inputs, output, opts);
+	return Promise.all(inputs.map(input => fs.readFile(input))).then(datas => {
+		return transpiler.transform(datas.join('\n'), opts).then(function ({ code }) {
+			return fs.writeFile(output, code);
+		});
+	});
 };
-
