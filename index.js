@@ -21,8 +21,15 @@ module.exports = function (inputs, output, options) {
 		};
 	}
 	return Promise.all(inputs.map(input => fs.readFile(input))).then(datas => {
-		return transpiler.transform(datas.join('\n'), opts).then(function ({ code }) {
-			return fs.writeFile(output, '(function() { ' + code + ' })()');
+		const beg = '(function() {\n';
+		const end = '\n})();';
+		const list = [];
+		for (const buf of datas) {
+			list.push(beg, buf, end);
+		}
+		const buf = list.join('\n');
+		return transpiler.transform(buf, opts).then(function ({ code }) {
+			return fs.writeFile(output, code);
 		});
 	});
 };
