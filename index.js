@@ -19,6 +19,8 @@ module.exports = function (inputs, output, options) {
 			compress: true,
 			mangle: true
 		};
+	} else {
+		opts.jsc.keepClassNames = true;
 	}
 	return Promise.all(inputs.map(input => fs.readFile(input))).then(datas => {
 		const beg = '(function() {\n';
