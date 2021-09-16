@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/kapouer/postinstall-js#readme",
   "dependencies": {
+    "@swc/cli": "^0.1.49",
     "@swc/core": "^1.2.88",
     "postinstall": "^0.7.3"
   },
