@@ -30,7 +30,7 @@ module.exports = function (inputs, output, options) {
 			list.push(beg, buf, end);
 		}
 		const buf = list.join('\n');
-		return transpiler.transform(buf, opts).then(function ({ code }) {
+		return transpiler.transform(buf, opts).then(({ code }) => {
 			return fs.writeFile(output, code);
 		});
 	});
