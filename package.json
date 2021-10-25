@@ -23,12 +23,12 @@
   },
   "homepage": "https://github.com/kapouer/postinstall-js#readme",
   "dependencies": {
-    "@swc/cli": "^0.1.50",
-    "@swc/core": "^1.2.91",
-    "postinstall": "^0.7.3"
+    "@swc/cli": "^0.1.51",
+    "@swc/core": "^1.2.103",
+    "postinstall": "^0.7.4"
   },
   "devDependencies": {
-    "@kapouer/eslint-config": "^1.6.0"
+    "@kapouer/eslint-config": "^1.6.1"
   },
   "eslintConfig": {
     "extends": "@kapouer/eslint-config"
