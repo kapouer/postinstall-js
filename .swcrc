@@ -1,15 +1,18 @@
 {
-	"sourceMaps": false,
-	"jsc": {
-		"loose": true,
-		"parser": {
-			"syntax": "ecmascript"
-		},
-		"target": "es3",
-		"minify": {
-			"compress": true,
-			"mangle": true
-		}
-	},
-	"minify": true
+  "sourceMaps": false,
+  "jsc": {
+    "loose": true,
+    "parser": {
+      "syntax": "ecmascript",
+      "classPrivateProperty": true,
+      "privateMethod": true
+    },
+    "target": "es3",
+    "minify": {
+      "compress": true,
+      "mangle": true
+    },
+    "transform": {}
+  },
+  "minify": true
 }
