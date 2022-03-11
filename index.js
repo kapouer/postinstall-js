@@ -8,7 +8,8 @@ module.exports = function (inputs, output, options) {
 			loose: true,
 			parser: {
 				syntax: "ecmascript",
-				classPrivateProperty: true
+				classPrivateProperty: true,
+				privateMethod: true
 			},
 			target: "es3"
 		}
@@ -16,7 +17,9 @@ module.exports = function (inputs, output, options) {
 	if (options.minify !== false) {
 		opts.minify = true;
 		opts.jsc.minify = {
-			compress: true,
+			compress: {
+				unused: true
+			},
 			mangle: true
 		};
 	} else {
