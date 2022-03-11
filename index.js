@@ -13,7 +13,7 @@ module.exports = function (inputs, output, options) {
 			target: "es3"
 		}
 	};
-	if (opts.minify !== false) {
+	if (options.minify !== false) {
 		opts.minify = true;
 		opts.jsc.minify = {
 			compress: true,
