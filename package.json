@@ -30,7 +30,7 @@
     "uglify-js": "^3.17.4"
   },
   "devDependencies": {
-    "@kapouer/eslint-config": "^1.8.0"
+    "@kapouer/eslint-config": "^1.9.0"
   },
   "eslintConfig": {
     "extends": "@kapouer/eslint-config"
