@@ -24,12 +24,7 @@ require('postinstall-js')(inputs, output, options).then(function() {
 
 ### browsers
 
-Breaking change in version 0.5.0:
-do not use `browsers` option.
-
-Rely on browserslist to get a default reasonable set,
-or use package.json or .browserslistrc file.
-See [browserslist](https://github.com/browserslist/browserslist#readme).
+A Browserslist query string
 
 ### minify
 
