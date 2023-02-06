@@ -2,8 +2,6 @@ const babel = require("@babel/core");
 const Uglify = require('uglify-js');
 
 module.exports = function (input, data, output, opts) {
-	if (opts.browsers) process.env.BROWSERSLIST = opts.browsers;
-
 	let code = babel.transform(
 		data.replace(/# sourceMappingURL=.+$/gm, ""),
 		Object.assign({}, opts.babel, {	filename: input })

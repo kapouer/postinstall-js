@@ -13,7 +13,8 @@ module.exports = function(inputs, output, options) {
 
 	const presetOpts = Object.assign({
 		modules: opts.modules,
-		exclude: ["@babel/plugin-transform-typeof-symbol"]
+		exclude: ["@babel/plugin-transform-typeof-symbol"],
+		targets: opts.browsers
 	}, options.presetEnv);
 
 	opts.babel = {
