@@ -12,8 +12,9 @@ module.exports = function (input, data, output, opts) {
 	const result = {};
 	if (opts.minify !== false) {
 		const ugl = Uglify.minify({
-			webkit: true,
 			[input]: code
+		}, {
+			webkit: true
 		});
 		if (ugl.error) throw(ugl.error);
 		result.data = ugl.code;
