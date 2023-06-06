@@ -23,14 +23,14 @@
   },
   "homepage": "https://github.com/kapouer/postinstall-js#readme",
   "dependencies": {
-    "@babel/core": "^7.20.12",
-    "@babel/preset-env": "^7.20.2",
+    "@babel/core": "^7.22.1",
+    "@babel/preset-env": "^7.22.4",
     "postinstall": "^0.8.0",
     "postinstall-cache": "^0.7.0",
     "uglify-js": "^3.17.4"
   },
   "devDependencies": {
-    "@kapouer/eslint-config": "^1.9.0"
+    "@kapouer/eslint-config": "^1.9.1"
   },
   "eslintConfig": {
     "extends": "@kapouer/eslint-config"
