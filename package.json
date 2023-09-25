@@ -1,6 +1,6 @@
 {
   "name": "postinstall-js",
-  "version": "0.9.2",
+  "version": "0.9.3",
   "description": "postinstall command to compile and minify javascript files",
   "main": "index.js",
   "scripts": {
