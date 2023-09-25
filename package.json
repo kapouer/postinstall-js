@@ -1,6 +1,6 @@
 {
   "name": "postinstall-js",
-  "version": "0.7.1",
+  "version": "0.10.0",
   "description": "postinstall command to compile and minify javascript files",
   "main": "index.js",
   "scripts": {
@@ -23,14 +23,28 @@
   },
   "homepage": "https://github.com/kapouer/postinstall-js#readme",
   "dependencies": {
-    "@swc/cli": "^0.1.51",
-    "@swc/core": "^1.2.103",
-    "postinstall": "^0.7.4"
+    "@swc/cli": "^0.1.62",
+    "@swc/core": "^1.3.89",
+    "postinstall": "^0.8.0"
   },
   "devDependencies": {
-    "@kapouer/eslint-config": "^1.6.1"
+    "@kapouer/eslint-config": "^1.9.1",
+    "mocha": "^10.2.0"
+  },
+  "mocha": {
+    "exit": true
   },
   "eslintConfig": {
-    "extends": "@kapouer/eslint-config"
+    "extends": "@kapouer/eslint-config",
+    "overrides": [
+      {
+        "files": [
+          "test/*.js"
+        ],
+        "env": {
+          "mocha": true
+        }
+      }
+    ]
   }
 }

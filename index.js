@@ -1,40 +1,46 @@
-const transpiler = require("@swc/core");
-const fs = require('fs').promises;
+const { bundle, minify } = require("@swc/core");
+const { basename, dirname } = require('node:path');
+const { promises: fs } = require('node:fs');
 
-module.exports = function (inputs, output, options) {
+module.exports = async function (inputs, output, options) {
 	const opts = {
-		sourceMaps: false,
 		jsc: {
-			loose: true,
 			parser: {
-				syntax: "ecmascript",
-				classPrivateProperty: true,
-				privateMethod: true
-			},
-			target: "es3"
+				syntax: "ecmascript"
+			}
+		},
+		env: {
+			targets: options.browsers,
+			bugfixes: true
 		}
 	};
 	if (options.minify !== false) {
 		opts.minify = true;
 		opts.jsc.minify = {
-			compress: {
-				unused: true
-			},
-			mangle: true
+			compress: true,
+			mangle: true,
+			format: {
+				comments: false
+			}
 		};
 	} else {
 		opts.jsc.keepClassNames = true;
 	}
-	return Promise.all(inputs.map(input => fs.readFile(input))).then(datas => {
-		const beg = '(function() {\n';
-		const end = '\n})();';
-		const list = [];
-		for (const buf of datas) {
-			list.push(beg, buf, end);
-		}
-		const buf = list.join('\n');
-		return transpiler.transform(buf, opts).then(({ code }) => {
-			return fs.writeFile(output, code);
-		});
+
+	const ret = await bundle({
+		sourceMaps: false,
+		options: opts,
+		target: 'browser',
+		output: {
+			path: dirname(output),
+			name: basename(output)
+		},
+		entry: Object.fromEntries(inputs.map(input => [input, input]))
 	});
+
+	let code = inputs.map(input => `(function() {${ret[input].code}})();`).join('\n');
+	if (opts.minify) {
+		code = (await minify(code, opts.jsc.minify)).code;
+	}
+	await fs.writeFile(output, code);
 };
