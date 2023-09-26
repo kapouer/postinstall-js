@@ -13,7 +13,11 @@ module.exports = function(inputs, output, options) {
 
 	const presetOpts = Object.assign({
 		modules: opts.modules,
-		exclude: ["@babel/plugin-transform-typeof-symbol"],
+		debug: false,
+		exclude: [
+			// "@babel/proposal-async-generator-functions",
+			// "@babel/plugin-transform-regenerator"
+		],
 		targets: opts.browsers
 	}, options.presetEnv);
 

@@ -30,9 +30,23 @@
     "uglify-js": "^3.17.4"
   },
   "devDependencies": {
-    "@kapouer/eslint-config": "^1.9.1"
+    "@kapouer/eslint-config": "^1.9.1",
+    "mocha": "^10.2.0"
+  },
+  "mocha": {
+    "exit": true
   },
   "eslintConfig": {
-    "extends": "@kapouer/eslint-config"
+    "extends": "@kapouer/eslint-config",
+    "overrides": [
+      {
+        "files": [
+          "test/*.js"
+        ],
+        "env": {
+          "mocha": true
+        }
+      }
+    ]
   }
 }
